@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 # @Time    : 2018/10/12 下午3:00
 # @Author  : Kionf
@@ -114,8 +114,9 @@ class AnalysisMysqlSlowLog:
         for slow_query_sql in all_slow_query_sql_info:
             query_metrics = slow_query_sql['metrics']
             query_time = query_metrics['Query_time']
-            query_tables = slow_query_sql['tables']
-
+#            query_tables = slow_query_sql['tables']
+#fix 获取key word tables
+            query_tables = slow_query_sql.get('tables');
             for show_tables_sql in query_tables:
                 get_table_name = show_tables_sql['create'].split('.')[1]
                 table_name = re.match(r'`(\w*)`\\G', get_table_name).group(1)
